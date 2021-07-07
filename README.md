@@ -1,6 +1,4 @@
-# Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# [SmartBrain](https://dandydo.github.io/smartbrain) detects any faces in an image. Just send it the link to the image and check out if it detects anyone's face.
 
 ## Available Scripts
 
@@ -39,32 +37,18 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+# Deploying to gh-pages (for any new React.js projects)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Install gh-pages https://www.npmjs.com/package/gh-pages
+NOTE: make sure that git repo is already pushed and you are at the project's repo
+2. Open package.json and add
+#### `"homepage": "http://github-username.github.io/github-repo-name"`
+3. add to "scripts" in package.json
+#### `"predeploy": "npm run build",`
+#### `"deploy": "gh-pages -d build"`
+4. deploy to gh-pages
+#### `npm run deploy`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Optional: update your repo with your changes.
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Now everything should be set up (you don't have to select the gh-pages branch in Pages since that has already done automatically.
