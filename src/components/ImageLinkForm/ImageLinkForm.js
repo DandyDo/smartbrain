@@ -5,7 +5,7 @@ const ImageLinkForm = () => {
     return (
       <div>
         <p className='f3'>
-            {'Send your image link below to detect faces'}
+            {'Link your image below to detect faces'}
         </p>
         <div className='center'>
             <div className='center pa4 br3 shadow-5 form'>
