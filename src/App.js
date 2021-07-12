@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import Particles from 'react-tsparticles';
+import Clarifai from 'clarifai';
 import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
 import Rank from './components/Rank/Rank';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import './App.css';
 
+
+// Particles options from TsParticles
 const particlesOptions = {
   fpsLimit: 60,
   interactivity: {
@@ -80,8 +83,38 @@ const particlesOptions = {
   detectRetina: true,
 }
 
+// Clarifai API (Don't forget to set your API key)
+const app = new Clarifai.App({
+  apiKey: 'YOUR API KEY',
+});
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      input: '',
+    }
+  }
+  
+  onInputChange = (event) => {
+    console.log(event.target.value);
+  }
+
+  onButtonSubmit = () => {
+    console.log('Button clicked!');
+
+    // get the reponse from Clarifai API (Replace Model ID with the face recognition model id)
+    // Takes in the image's link as an input then checks for any faces
+    app.models
+    .predict('Model ID', this.state.input)
+    .then((response) => {
+      console.log(response);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
   render () {
       return (
         <div className="App">
@@ -89,7 +122,7 @@ class App extends Component {
           <Navigation />
           <Logo />
           <Rank />
-          <ImageLinkForm />
+          <ImageLinkForm onInputChange={ this.onInputChange } onButtonSubmit={ this.onButtonSubmit }/>
           {/*<FacialRecognition />*/}
         </div>
     );

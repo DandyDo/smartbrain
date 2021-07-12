@@ -9,3 +9,7 @@
     background-size: 330px 330px, 250px 250px, 250px 250px, 150px 150px;
     background-position: 0 0, 40px 60px, 130px 150px, 70px 20px;
 }
+
+.button-size {
+    min-width: 110px;
+}
