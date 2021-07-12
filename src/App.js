@@ -86,7 +86,7 @@ const particlesOptions = {
 
 // Clarifai API (Don't forget to set your API key)
 const app = new Clarifai.App({
-  apiKey: 'Your API KEY',
+  apiKey: 'Your API Key',
 });
 
 class App extends Component {
@@ -94,28 +94,48 @@ class App extends Component {
     super();
     this.state = {
       input: '',
+      imageUrl:'',
+      boxes: [],
     }
   }
+
+  // Calculate the four points of the face(s) detection box and returns the object info
+  calculateFaceLocation = (data) => {
+    const clarifaiFaces = data.outputs[0].data.regions.map(region => region.region_info.bounding_box);
+    const image = document.getElementById('input-image');
+    const width = Number(image.width);
+    const height = Number(image.height);
+    
+    return clarifaiFaces.map(face => {
+      return {
+        leftCol: face.left_col * width,
+        topRow: face.top_row * height,
+        rightCol: width - (face.right_col * width),
+        bottomRow: height - (face.bottom_row * height)
+      } 
+    });
+  }
+
+  // Takes the calculatedFaceLocation returned object and displays the box
+  displayFaceBox = (boxes) => {
+    this.setState({ boxes: boxes });
+  }
   
-  // sets the state of the input from ImageLinkForm whenever the user types
+  // Sets the state of the input from ImageLinkForm whenever the user types
   onInputChange = (event) => {
     this.setState({ input: event.target.value });
   }
 
-  // sets the state of the image from FacialRecognition whenever the submits
+  // Sets the state of the image from FacialRecognition whenever the submits
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.input });
 
-    // get the reponse from Clarifai API (Replace Model ID with the FACE_EMBED_MODEL from their github)
+    // Get the reponse from Clarifai API (Replace Model ID with the FACE_EMBED_MODEL from their github)
     // Takes in the image's link as an input then checks for any faces
     app.models
-    .predict('MODEL ID', this.state.input)
-    .then((response) => {
-      console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+    .predict('Model ID', this.state.input)
+    .then((response) => this.displayFaceBox(this.calculateFaceLocation(response)))
+    .catch((error) => console.log(error));
   }
 
   render () {
@@ -133,6 +153,7 @@ class App extends Component {
           />
           <FacialRecognition 
             imageUrl={ this.state.imageUrl }
+            boxes={ this.state.boxes }
           />
         </div>
     );
