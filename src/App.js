@@ -5,6 +5,7 @@ import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
 import Rank from './components/Rank/Rank';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
+import FacialRecognition from './components/FacialRecognition/FacialRecognition';
 import './App.css';
 
 
@@ -85,7 +86,7 @@ const particlesOptions = {
 
 // Clarifai API (Don't forget to set your API key)
 const app = new Clarifai.App({
-  apiKey: 'YOUR API KEY',
+  apiKey: 'Your API KEY',
 });
 
 class App extends Component {
@@ -96,19 +97,21 @@ class App extends Component {
     }
   }
   
+  // sets the state of the input from ImageLinkForm whenever the user types
   onInputChange = (event) => {
-    console.log(event.target.value);
+    this.setState({ input: event.target.value });
   }
 
+  // sets the state of the image from FacialRecognition whenever the submits
   onButtonSubmit = () => {
-    console.log('Button clicked!');
+    this.setState({ imageUrl: this.state.input });
 
-    // get the reponse from Clarifai API (Replace Model ID with the face recognition model id)
+    // get the reponse from Clarifai API (Replace Model ID with the FACE_EMBED_MODEL from their github)
     // Takes in the image's link as an input then checks for any faces
     app.models
-    .predict('Model ID', this.state.input)
+    .predict('MODEL ID', this.state.input)
     .then((response) => {
-      console.log(response);
+      console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
     })
     .catch((err) => {
       console.log(err);
@@ -118,12 +121,19 @@ class App extends Component {
   render () {
       return (
         <div className="App">
-          <Particles className='particles' params={ particlesOptions } />
+          <Particles className='particles' 
+            params={ particlesOptions } 
+          />
           <Navigation />
           <Logo />
           <Rank />
-          <ImageLinkForm onInputChange={ this.onInputChange } onButtonSubmit={ this.onButtonSubmit }/>
-          {/*<FacialRecognition />*/}
+          <ImageLinkForm 
+            onInputChange={ this.onInputChange } 
+            onButtonSubmit={ this.onButtonSubmit }
+          />
+          <FacialRecognition 
+            imageUrl={ this.state.imageUrl }
+          />
         </div>
     );
   }
