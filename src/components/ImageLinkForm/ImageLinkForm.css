@@ -1,0 +1,15 @@
+.form {
+    width: 700px;
+    background-color:#00000036;
+    background-image:
+    radial-gradient(rgba(255, 255, 255, 0.767), rgba(255,255,255,.2) 2px, transparent 40px),
+    radial-gradient(rgba(255, 255, 255, 0.685), rgba(255,255,255,.15) 1px, transparent 30px),
+    radial-gradient(rgba(255, 255, 255, 0.822), rgba(255,255,255,.1) 2px, transparent 40px),
+    radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 30px);
+    background-size: 330px 330px, 250px 250px, 250px 250px, 150px 150px;
+    background-position: 0 0, 40px 60px, 130px 150px, 70px 20px;
+}
+
+.button-size {
+    min-width: 110px;
+}
