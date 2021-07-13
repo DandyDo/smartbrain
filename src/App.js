@@ -6,6 +6,10 @@ import Logo from './components/Logo/Logo';
 import Rank from './components/Rank/Rank';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import FacialRecognition from './components/FacialRecognition/FacialRecognition';
+import Title from './components/Title/Title';
+import SignIn from './components/SignIn/SignIn';
+import Register from './components/Register/Register';
+import Footer from './components/Footer/Footer';
 import './App.css';
 
 
@@ -96,6 +100,8 @@ class App extends Component {
       input: '',
       imageUrl:'',
       boxes: [],
+      route: 'signin',
+      isSignedIn: false
     }
   }
 
@@ -105,14 +111,14 @@ class App extends Component {
     const image = document.getElementById('input-image');
     const width = Number(image.width);
     const height = Number(image.height);
-    
+
     return clarifaiFaces.map(face => {
       return {
         leftCol: face.left_col * width,
         topRow: face.top_row * height,
         rightCol: width - (face.right_col * width),
         bottomRow: height - (face.bottom_row * height)
-      } 
+      }
     });
   }
 
@@ -130,7 +136,7 @@ class App extends Component {
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.input });
 
-    // Get the reponse from Clarifai API (Replace Model ID with the FACE_EMBED_MODEL from their github)
+    // Get the reponse from Clarifai API (Replace 'Model ID' with the FACE_EMBED_MODEL from their github)
     // Takes in the image's link as an input then checks for any faces
     app.models
     .predict('Model ID', this.state.input)
@@ -138,23 +144,53 @@ class App extends Component {
     .catch((error) => console.log(error));
   }
 
+  onRouteChange = (route) => {
+    if (route === 'signout') {
+      this.setState({ isSignedIn: false });
+    }
+    else if (route === 'home'){
+      this.setState({ isSignedIn: true });
+    }
+
+    this.setState({ route: route });
+  }
+
   render () {
+    const { imageUrl, boxes, route, isSignedIn} = this.state;
       return (
-        <div className="App">
+        <div className="App relative min-vh-100">
           <Particles className='particles' 
             params={ particlesOptions } 
           />
-          <Navigation />
-          <Logo />
-          <Rank />
-          <ImageLinkForm 
-            onInputChange={ this.onInputChange } 
-            onButtonSubmit={ this.onButtonSubmit }
-          />
-          <FacialRecognition 
-            imageUrl={ this.state.imageUrl }
-            boxes={ this.state.boxes }
-          />
+          <Navigation isSignedIn={ isSignedIn } onRouteChange= { this.onRouteChange }/>
+          { 
+            route === 'home'
+            ? <div>
+                <Logo />
+                <Rank />
+                <ImageLinkForm 
+                  onInputChange={ this.onInputChange } 
+                  onButtonSubmit={ this.onButtonSubmit }
+                />
+                <FacialRecognition 
+                  imageUrl={ imageUrl }
+                  boxes={ boxes }
+                />
+              </div>
+            : (
+                <div>
+                  <Title />
+                  {
+                    route === 'signin'
+                    ? <SignIn onRouteChange={ this.onRouteChange }/>  
+                    : route === 'signout'
+                    ? <SignIn onRouteChange={ this.onRouteChange }/>  
+                    : <Register onRouteChange={ this.onRouteChange } />
+                  }
+                </div>
+              )   
+          }
+          <Footer />
         </div>
     );
   }
