@@ -104,7 +104,8 @@ class App extends Component {
       isSignedIn: false
     }
   }
-
+  
+  
   // Calculate the four points of the face(s) detection box and returns the object info
   calculateFaceLocation = (data) => {
     const clarifaiFaces = data.outputs[0].data.regions.map(region => region.region_info.bounding_box);
