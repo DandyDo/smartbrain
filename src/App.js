@@ -220,7 +220,7 @@ loadUser = (data) => {
                     route === 'signin'
                     ? <SignIn loadUser={ this.loadUser } onRouteChange={ this.onRouteChange }/>  
                     : route === 'signout'
-                    ? <SignIn onRouteChange={ this.onRouteChange }/>  
+                    ? <SignIn loadUser={ this.loadUser } onRouteChange={ this.onRouteChange }/>  
                     : <Register loadUser={ this.loadUser } onRouteChange={ this.onRouteChange } />
                   }
                 </div>
