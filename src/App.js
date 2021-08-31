@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Particles from 'react-tsparticles';
-import Clarifai from 'clarifai';
 import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
 import Rank from './components/Rank/Rank';
@@ -88,11 +87,6 @@ const particlesOptions = {
   detectRetina: true,
 }
 
-// Clarifai API (Don't forget to set your API key)
-const app = new Clarifai.App({
-  apiKey: 'Your API Key',
-});
-
 const initialState = {
   input: '',
   imageUrl:'',
@@ -168,10 +162,15 @@ loadUser = (data) => {
   onImageSubmit = () => {
     this.setState({ imageUrl: this.state.input });
 
-    // Get the reponse from Clarifai API (Replace 'Model ID' with the FACE_EMBED_MODEL from their github)
-    // Takes in the image's link as an input then checks for any faces
-    app.models
-    .predict('Model ID', this.state.input)
+    // Takes in the image's link as an input then checks for any faces, updating entries.
+    fetch('http://localhost:3000/imageurl', {
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        input: this.state.input,
+      })
+    })
+    .then(response => response.json())
     .then(response => {
       if (response) {
         fetch('http://localhost:3000/image', {
