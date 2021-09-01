@@ -1,7 +1,9 @@
 # [SmartBrain](https://dandydo.github.io/smartbrain) Facial Recognition
 
 
-A React.js project that detects any faces in an image. Just send it the image link and let the facial recognition AI detect anyone's face.
+A React.js (front-end) project that detects any faces in an image. Just send it the image link and let the facial recognition AI detect anyone's face.
+
+Note: You can check the front-end of this project [here](https://github.com/DandyDo/smartbrain-api).
 
 
 ### Deploying to gh-pages (for any new React.js projects)
