@@ -170,7 +170,14 @@ loadUser = (data) => {
         input: this.state.input,
       })
     })
-    .then(response => response.json())
+    .then(response => {
+      if (response.ok) {
+        return response.json();
+      }
+      else {
+        throw new Error('Error with user input');
+      }
+    })
     .then(response => {
       if (response) {
         fetch('https://morning-cliffs-46624.herokuapp.com/image', {
