@@ -3,9 +3,9 @@ import './FacialRecognition.css'
 
 const FacialRecognition = ({ imageUrl, boxes }) => {
     return (
-        <div className='center ma'>
-            <div className='absolute mt3'>
-                <img id='input-image' alt='' src={ imageUrl } width='500px' height='auto'/>
+        <div className='center ma mb3'>
+            <div className='relative'>
+                <img id='input-image' alt='' src={ imageUrl } width='400px' height='auto'/>
                 {
                     boxes.map((box, i) => {
                         return (<div 

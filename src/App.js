@@ -163,7 +163,7 @@ loadUser = (data) => {
     this.setState({ imageUrl: this.state.input });
 
     // Takes in the image's link as an input then checks for any faces, updating entries.
-    fetch('https://morning-cliffs-46624.herokuapp.com/imageurl', {
+    fetch('http://localhost:3000/imageurl', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -180,7 +180,7 @@ loadUser = (data) => {
     })
     .then(response => {
       if (response) {
-        fetch('https://morning-cliffs-46624.herokuapp.com/image', {
+        fetch('http://localhost:3000/image', {
           method: 'put',
           headers: {'Content-Type': 'application/json'},
           body: JSON.stringify({
